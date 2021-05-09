@@ -89,7 +89,7 @@
                 hours = 12;
             }
 
-            return `${hours.toString().padStart(2, '0')}:${res[1].toString().padStart(2, '0')} ${am_pm}`;
+            return `${hours}<span class="fade">:</span>${res[1].toString().padStart(2, '0')} <span class="am_pm">${am_pm}</span>`;
         }
 
         setInterval(() => {

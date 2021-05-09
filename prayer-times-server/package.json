@@ -1,0 +1,19 @@
+{
+    "name": "prayer_times_server",
+    "description": "",
+    "version": "1.0.0",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Coolsonickirby/prayer-times"
+    },
+    "keywords": [],
+    "author": "Ali Hussain (Coolsonickirby/Random)",
+    "license": "",
+    "bugs": {
+        "url": "https://github.com/Coolsonickirby/prayer-times/issues"
+    },
+    "homepage": "https://github.com/Coolsonickirby/prayer-times/"
+}
