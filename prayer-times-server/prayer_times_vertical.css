@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Vesper+Libre:wght@700&display=swap');
+
+html, body {
+    width: 100%;
+    height: 1920px;
+    overflow-x: hidden;
+    background: transparent;
+    font-family: 'Vesper Libre', serif;
+}
+
+html {
+    background: url("vertical_background.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-color: #51A3B5;
+}
+
+.container {
+    margin: 0 auto;
+    width: 85%;
+    height: 98%;
+}
+
+.box {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+
+.box>div {
+    flex: 1 1 auto;
+}
+
+.box>div:first-child {
+    height: 55%;
+}
+
+.header {
+    color: white;
+    background: #188E61;
+    padding: 20px;
+    border: 4px solid white;
+    border-bottom: 7px solid white;
+    border-top-left-radius:  5px;
+    border-top-right-radius: 5px;
+    padding-bottom: 0;
+}
+
+.header>h2, .header>h1 {
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
+    margin-bottom: 5px;
+    font-weight: normal;
+    line-height: 1;
+    font-size: 2.9rem;
+}
+
+.header>h1 {
+    font-size: 5rem;
+    font-weight: bold;
+}
+
+
+table {
+    font-size: large;
+    width: 100%;
+    text-align: center;
+    color: white;
+    border-collapse: collapse;
+    border: 4px solid white;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+
+table>tbody>tr{
+    background: #0E5A54;
+}
+
+table>tbody>tr:nth-child(odd){
+    background: #227D7C;
+}
+
+table>tbody>tr:first-child {
+    background: #086856 !important;
+    border: 4px solid white;
+}
+
+table>tbody>tr:last-child {
+    background: #188E61 !important;
+}
+
+table>tbody>tr>td{
+    padding: 5px;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    font-size: 3.8rem;
+    line-height: 2.5;
+}
+
+table>tbody>tr>td:first-child{
+    padding-left: 20px;
+}
+
+.salat_name {
+    text-transform: capitalize;
+}
+
+.footer {
+    border: 4px solid white;
+    border-radius: 15px;
+    background-color: #0E5A54;
+    margin: 0;
+    padding: 10px;
+    color: white;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    font-size: 3rem;
+    height: 50px;
+}
+
+.footer>p {
+    margin: 0 auto;
+    padding: 0;
+}

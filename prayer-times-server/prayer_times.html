@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prayer Times Server</title>
+    <link rel="stylesheet" href="prayer_times_vertical.css">
+    <script src="jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="box">
+            <div>
+                <div class="header">
+                    <h2 id="masjid_name">{masjid_name}</h2>
+                    <h2 id="current_date">{current_date}</h2>
+                    <h1 id="current_time">X:XX</h1>
+                </div>
+                <table>
+                    <tbody id="prayer_table">
+                        <tr>
+                            <td>Prayer</td>
+                            <td>Adhan</td>
+                            <td>Iqama</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="footer">
+                <p id="message">{message}</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var use24 = false;
+
+        function refreshInformation() {
+            $.getJSON("/info", function (data) {
+                use24 = data["format"] == "24";
+
+                document.getElementById("masjid_name").innerHTML = data["masjid_name"];
+                document.getElementById("current_date").innerHTML = data["current_date"];
+
+                ["fajr", "dhuhr", "asr", "maghrib", "isha"].forEach((prayer) => {
+                    let tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td class="salat_name">${prayer}</td>
+                        <td>${data[prayer]["adhan"]}</td>
+                        <td>${data[prayer]["iqama"]}</td>
+                    `;
+                    document.getElementById("prayer_table").append(tr);
+                });
+
+                let tr = document.createElement("tr");
+
+                tr.innerHTML = `
+                    <td class="salat_name">Jum'ah</td>
+                    <td>${data["jummah_adhan"]}</td>
+                    <td>${data["jummah_iqama"]}</td>
+                `;
+
+                document.getElementById("prayer_table").append(tr);
+
+
+                document.getElementById("message").innerHTML = data["message"];
+                console.log(data);
+            });
+        }
+
+        function getTime() {
+            let date = new Date();
+            let time = `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+            if (use24) { return time; }
+
+            let res = time.split(":");
+            let hours = parseInt(res[0]);
+            let am_pm = "AM";
+
+            if (hours >= 12) {
+                hours = hours - 12;
+                am_pm = "PM";
+            }
+
+            if (hours == 0) {
+                hours = 12;
+            }
+
+            return `${hours.toString().padStart(2, '0')}:${res[1].toString().padStart(2, '0')} ${am_pm}`;
+        }
+
+        setInterval(() => {
+            document.getElementById("current_time").innerHTML = getTime();
+        }, 1000);
+
+        refreshInformation();
+        document.getElementById("current_time").innerHTML = getTime();
+    </script>
+</body>
+
+</html>
