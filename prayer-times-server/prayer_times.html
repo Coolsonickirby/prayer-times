@@ -30,13 +30,19 @@
                 </table>
             </div>
             <div class="footer">
-                <p id="message">{message}</p>
+                <div id="message">
+                    {message}
+                </div>
             </div>
         </div>
     </div>
 
     <script>
         var use24 = false;
+        var elem = document.getElementById('message'); //YOUR DIV ELEMENT WHICH YOU WANT TO SCROLL
+        var scroll_pos = 0; //SETTING INITIAL SCROLL TO 0
+        var scroll_speed = 0;
+        var refresh_message = false;
 
         function refreshInformation() {
             $.getJSON("/info", function (data) {
@@ -66,7 +72,8 @@
                 document.getElementById("prayer_table").append(tr);
 
 
-                document.getElementById("message").innerHTML = data["message"];
+                document.getElementById("message").textContent = data["message"];
+                scroll_speed = data["scroll_speed"];
                 console.log(data);
             });
         }
@@ -89,12 +96,37 @@
                 hours = 12;
             }
 
-            return `${hours}<span class="fade">:</span>${res[1].toString().padStart(2, '0')} <span class="am_pm">${am_pm}</span>`;
+            return `${hours}<span class="fade-text">:</span>${res[1].toString().padStart(2, '0')} <span class="am_pm">${am_pm}</span>`;
         }
 
         setInterval(() => {
             document.getElementById("current_time").innerHTML = getTime();
         }, 1000);
+
+        window.setInterval(function () {
+            if (refresh_message) {
+                return;
+            }
+
+            if (elem.scrollTop >= elem.offsetHeight) {
+                refresh_message = true;
+                setTimeout(() => {
+                    $("#message").fadeOut(500);
+                    $("#message").promise().done(function () {
+                        $("#message").css('display', 'none');
+                        elem.scrollTop = 0;
+                        scroll_pos = 0;
+                        setTimeout(() => {
+                            $("#message").fadeIn(500);
+                            refresh_message = false;
+                        }, 5000);
+                    });
+                }, 3000);
+            }
+
+            elem.scrollTo({ top: scroll_pos, behavior: 'smooth' });
+            scroll_pos += scroll_speed;
+        }, 50);
 
         refreshInformation();
         document.getElementById("current_time").innerHTML = getTime();

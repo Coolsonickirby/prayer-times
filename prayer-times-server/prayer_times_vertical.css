@@ -2,8 +2,8 @@
 
 html, body {
     width: 100%;
-    height: 1920px;
-    overflow-x: hidden;
+    height: 100%;
+    overflow: hidden;
     background: transparent;
     font-family: 'Vesper Libre', serif;
 }
@@ -19,6 +19,7 @@ html {
     margin: 0 auto;
     width: 85%;
     height: 98%;
+    margin-top: 20px;
 }
 
 .box {
@@ -65,7 +66,7 @@ html {
     font-weight: bold;
 }
 
-.fade {
+.fade-text {
     opacity: 1;
     animation: fade 1s infinite;
 }
@@ -88,7 +89,6 @@ html {
 }
 
 table {
-    font-size: large;
     width: 100%;
     text-align: center;
     color: white;
@@ -97,7 +97,6 @@ table {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
-
 
 table>tbody>tr{
     background: #0E5A54;
@@ -119,7 +118,7 @@ table>tbody>tr:last-child {
 table>tbody>tr>td{
     padding: 5px;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-    font-size: 3.8rem;
+    font-size: 8rem;
     line-height: 2.5;
 }
 
@@ -136,14 +135,17 @@ table>tbody>tr>td:first-child{
     border-radius: 15px;
     background-color: #0E5A54;
     margin: 0;
-    padding: 10px;
+    padding: 50px;
     color: white;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-    font-size: 3rem;
+    font-size: 6rem;
     height: 50px;
+    line-height: 1;
 }
 
-.footer>p {
+.footer>div {
+    max-height: 100%;
     margin: 0 auto;
     padding: 0;
+    overflow-y: scroll;
 }
