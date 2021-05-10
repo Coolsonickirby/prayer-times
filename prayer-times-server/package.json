@@ -15,5 +15,13 @@
     "bugs": {
         "url": "https://github.com/Coolsonickirby/prayer-times/issues"
     },
-    "homepage": "https://github.com/Coolsonickirby/prayer-times/"
+    "homepage": "https://github.com/Coolsonickirby/prayer-times/",
+    "dependencies": {
+        "express": "~4.17.1",
+        "adhan": "~4.1.0",
+        "mustache": "~4.2.0",
+        "livereload": "~0.9.0",
+        "connect-livereload": "~0.6.1",
+        "luxon": "~1.26.0"
+    }
 }
