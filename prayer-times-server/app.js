@@ -88,6 +88,10 @@ function getPageData(){
             break;
     }
 
+    if(!checkIfObjectExists(data["messages_extra"])){
+        data["messages_extra"] = [];
+    }
+
     let prayer_times = getPrayerTimes();
     ["fajr", "dhuhr", "asr", "maghrib", "isha"].forEach((prayer) => {
         data[prayer] = {};
