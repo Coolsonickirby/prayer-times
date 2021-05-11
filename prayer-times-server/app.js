@@ -72,6 +72,16 @@ function getPageData(){
 
     data["current_date"] = `${days[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}`;
 
+    switch (checkIfObjectExists(data["orientation"]) ? data["orientation"] : ""){
+        case "left":
+        case "right":
+            data["css_style"] = `./css/prayer_times_vertical_${data["orientation"]}.css`;
+            break;
+        default:
+            data["css_style"] = `./css/prayer_times_vertical_left.css`;
+            break;
+    }
+
     let prayer_times = getPrayerTimes();
     ["fajr", "dhuhr", "asr", "maghrib", "isha"].forEach((prayer) => {
         data[prayer] = {};
@@ -89,28 +99,6 @@ function getPageData(){
     return JSON.stringify(data);
 }
 
-function rotateDisplay(){
-    if (process.platform == "win32"){
-        return;
-    }
-
-    var orientation = checkIfObjectExists(config.configData["orientation"]) ? config.configData["orientation"] : "normal";
-
-    exec(`xrandr`, (error, stdout, stderr) => {
-        if (error) {
-            console.log(`error: ${error.message}`);
-            return;
-        }
-        if (stderr) {
-            console.log(`stderr: ${stderr}`);
-            return;
-        }
-        console.log(`stdout: ${stdout}`);
-    });
-}
-
-
-
 function setupServer() {
     const liveReloadServer = livereload.createServer();
     liveReloadServer.watch(__dirname + '/');
@@ -118,9 +106,6 @@ function setupServer() {
     app = express();
     
     router.get('/', (req, res) => {
-        // From https://github.com/expressjs/express/issues/2518
-        if (req.socket.localAddress === req.socket.remoteAddress) { rotateDisplay(); }
-
         getRenderedPage("public/prayer_times.html", getPageData(), (data, err) => {
             res.send(data);
         });

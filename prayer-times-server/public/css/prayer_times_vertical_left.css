@@ -27,21 +27,19 @@ body {
 }
 
 html {
-  background: url("../img/vertical_background.png");
+  background: url("../img/vertical_background_left.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-color: #51a3b5;
 }
 
 body {
-  transform: rotate(90deg);
-  transform-origin: bottom left;
-
+  transform: rotate(-90deg);
+  transform-origin: top left;
   position: absolute;
-  top: -100vw;
-
   height: 100vw;
   width: 100vh;
+  bottom: -100vw;
 }
 
 .container {
