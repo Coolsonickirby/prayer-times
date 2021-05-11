@@ -53,6 +53,7 @@
         var current_extra_index = 0;
         var messages_interval;
         var messages_interval_extra;
+        var current_day = new Date();
 
         function refreshInformation() {
             $.getJSON("/info", function (data) {
@@ -154,8 +155,21 @@
             return `${hours}<span class="fade-text">:</span>${res[1].toString().padStart(2, '0')} <span class="am_pm">${am_pm}</span>`;
         }
 
+        function isNewDay(){
+            var date = new Date();
+            if(date.toDateString() != current_day.toDateString()){
+                current_day = date;
+                return true;
+            }else {
+                return false;
+            }
+        }
+
         setInterval(() => {
             document.getElementById("current_time").innerHTML = getTime();
+            if(isNewDay()){
+                refreshInformation();
+            }
         }, 1000);
 
         refreshInformation();
