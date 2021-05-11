@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prayer Times Server</title>
+    <link rel="stylesheet" href="./css/prayer_times_common.css">
     {{#css_style}}
     <link rel="stylesheet" href="{{ . }}">
     {{/css_style}}
@@ -17,7 +18,6 @@
         <div class="box">
             <div>
                 <div class="header">
-                    <h2 id=""></h2>
                     <h2 id="masjid_name">{masjid_name}</h2>
                     <h2 id="current_date">{current_date}</h2>
                     <h1 id="current_time">X:XX</h1>
@@ -32,14 +32,16 @@
                     </tbody>
                 </table>
             </div>
-            <div id="message" class="footer">
-                <div>
-                    {message}
+            <div>
+                <div id="message" class="footer">
+                    <div>
+                        {message}
+                    </div>
                 </div>
-            </div>
-            <div id="message_extra" class="footer">
-                <div>
-                    {message}
+                <div id="message_extra" class="footer">
+                    <div>
+                        {message}
+                    </div>
                 </div>
             </div>
         </div>

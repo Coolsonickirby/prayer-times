@@ -8,10 +8,10 @@ const connectLivereload = require("connect-livereload");
 var { DateTime } = require('luxon');
 const { exec } = require("child_process");
 
-var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-function ConfigClass(){
+function ConfigClass() {
     this.configData = {};
 
     this.ReadConfig = () => {
@@ -32,7 +32,7 @@ function getPrayerTimes() {
     return prayer_times;
 }
 
-function getRenderedPage(page, data, callback){
+function getRenderedPage(page, data, callback) {
     let rendered = "";
     fs.readFile(__dirname + '/' + page, 'utf8', (err, html) => {
         if (err) { throw err; }
@@ -41,9 +41,9 @@ function getRenderedPage(page, data, callback){
     });
 }
 
-function convertPrayerTime(prayerTime){
+function convertPrayerTime(prayerTime) {
     let result = "";
-    switch(config.configData["format"]){
+    switch (config.configData["format"]) {
         case "24":
             let date = new Date(prayerTime);
             result = `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
@@ -57,14 +57,14 @@ function convertPrayerTime(prayerTime){
 }
 
 function addMinutes(date, minutes) {
-    return new Date(date.getTime() + minutes*60000);
+    return new Date(date.getTime() + minutes * 60000);
 }
 
-function checkIfObjectExists(obj){
+function checkIfObjectExists(obj) {
     return (obj != null && obj != undefined);
 }
 
-function getPageData(){
+function getPageData() {
     let date = new Date();
     let data = JSON.parse(JSON.stringify(config.configData));
 
@@ -72,12 +72,19 @@ function getPageData(){
 
     data["current_date"] = `${days[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}`;
 
-    switch (checkIfObjectExists(data["orientation"]) ? data["orientation"] : ""){
+    switch (checkIfObjectExists(data["orientation"]) ? data["orientation"] : "") {
         case "left":
         case "right":
             data["css_style"] = [
                 `./css/prayer_times_vertical_common.css`,
                 `./css/prayer_times_vertical_${data["orientation"]}.css`
+            ];
+            break;
+        case "normal":
+        case "flipped":
+            data["css_style"] = [
+                `./css/prayer_times_horizontal_common.css`,
+                `./css/prayer_times_horizontal_${data["orientation"]}.css`
             ];
             break;
         default:
@@ -88,21 +95,21 @@ function getPageData(){
             break;
     }
 
-    if(!checkIfObjectExists(data["messages_extra"])){
+    if (!checkIfObjectExists(data["messages_extra"])) {
         data["messages_extra"] = [];
     }
 
     let prayer_times = getPrayerTimes();
     ["fajr", "dhuhr", "asr", "maghrib", "isha"].forEach((prayer) => {
         data[prayer] = {};
-        data[prayer]["adhan"] = convertPrayerTime(prayer_times[prayer]); 
+        data[prayer]["adhan"] = convertPrayerTime(prayer_times[prayer]);
         data[prayer]["iqama"] = convertPrayerTime(
-            addMinutes(prayer_times[prayer], 
-                checkIfObjectExists(data[`${prayer}_iqama`] )
-                ? 
-                data[`${prayer}_iqama`]
-                :
-                10
+            addMinutes(prayer_times[prayer],
+                checkIfObjectExists(data[`${prayer}_iqama`])
+                    ?
+                    data[`${prayer}_iqama`]
+                    :
+                    10
             ));
     });
 
@@ -112,9 +119,9 @@ function getPageData(){
 function setupServer() {
     const liveReloadServer = livereload.createServer();
     liveReloadServer.watch(__dirname + '/');
-    
+
     app = express();
-    
+
     router.get('/', (req, res) => {
         getRenderedPage("public/prayer_times.html", getPageData(), (data, err) => {
             res.send(data);
@@ -129,7 +136,7 @@ function setupServer() {
     app.use(express.static(__dirname + '/public/'));
     app.use('/', router);
     app.listen(9000);
-    
+
     liveReloadServer.server.once("connection", () => {
         setTimeout(() => {
             liveReloadServer.refresh("/");

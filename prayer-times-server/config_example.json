@@ -8,17 +8,18 @@
         "Message 3"
     ],
     "messages_extra": [
-        "Message 1",
-        "Message 2",
-        "Message 3"
+        "Extra Message 1",
+        "Extra Message 2",
+        "Extra Message 3"
     ],
     "message_display_time": 10,
-    "lat": 0.00000,
-    "long": 0.0000,
+    "lat": 42.480202,
+    "long": -83.240997,
     "format": "12",
     "fajr_iqama": 20,
     "dhuhr_iqama": 10,
     "asr_iqama": 10,
     "maghrib_iqama": 10,
-    "isha_iqama": 10
+    "isha_iqama": 10,
+    "orientation": "normal"
 }

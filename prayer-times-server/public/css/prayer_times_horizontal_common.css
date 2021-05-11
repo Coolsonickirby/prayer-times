@@ -1,0 +1,26 @@
+.container {
+    height: 100%;
+}
+
+.box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 0px 0px;
+  grid-template-areas: ". .";
+  height: 100%;
+}
+
+.salat_name {
+    text-transform: capitalize;
+}
+
+.footer {
+    background: #125B55;
+    margin: 20px;
+    padding: 20px;
+    height: 40%;
+    border: 2px solid white;
+    font-size: 2.5rem;
+    overflow: hidden;
+}
