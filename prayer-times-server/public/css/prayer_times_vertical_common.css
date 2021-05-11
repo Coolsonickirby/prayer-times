@@ -35,7 +35,7 @@ html {
 .container {
   margin: 0 auto;
   width: 85%;
-  height: 98%;
+  height: 97%;
   margin-top: 40px;
 }
 
@@ -50,7 +50,7 @@ html {
 }
 
 .box > div:first-child {
-  height: 45%;
+  height: 46%;
 }
 
 .header {
