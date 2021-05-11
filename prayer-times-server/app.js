@@ -6,6 +6,7 @@ const adhan = require('adhan');
 const livereload = require("livereload");
 const connectLivereload = require("connect-livereload");
 var { DateTime } = require('luxon');
+const { exec } = require("child_process");
 
 var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -88,13 +89,38 @@ function getPageData(){
     return JSON.stringify(data);
 }
 
+function rotateDisplay(){
+    if (process.platform == "win32"){
+        return;
+    }
+
+    var orientation = checkIfObjectExists(config.configData["orientation"]) ? config.configData["orientation"] : "left"
+
+    exec(`DISPLAY=:0 xrandr --output HDMI-1 --rotate ${orientation}`, (error, stdout, stderr) => {
+        if (error) {
+            console.log(`error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.log(`stderr: ${stderr}`);
+            return;
+        }
+        console.log(`stdout: ${stdout}`);
+    });
+}
+
+
+
 function setupServer() {
     const liveReloadServer = livereload.createServer();
     liveReloadServer.watch(__dirname + '/');
     
     app = express();
-
+    
     router.get('/', (req, res) => {
+        // From https://github.com/expressjs/express/issues/2518
+        if (req.socket.localAddress === req.socket.remoteAddress) { rotateDisplay(); }
+
         getRenderedPage("public/prayer_times.html", getPageData(), (data, err) => {
             res.send(data);
         });
