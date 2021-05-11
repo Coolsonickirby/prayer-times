@@ -96,7 +96,7 @@ function rotateDisplay(){
 
     var orientation = checkIfObjectExists(config.configData["orientation"]) ? config.configData["orientation"] : "normal";
 
-    exec(`DISPLAY=:0 xrandr --output HDMI-1 --rotate ${orientation}`, (error, stdout, stderr) => {
+    exec(`xrandr`, (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
             return;
