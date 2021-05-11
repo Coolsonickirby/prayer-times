@@ -50,7 +50,7 @@ html {
 }
 
 .box > div:first-child {
-  height: 48%;
+  height: 45%;
 }
 
 .header {
@@ -168,4 +168,8 @@ table > tbody > tr > td:first-child {
   margin: 0 auto;
   padding: 0;
   overflow-y: hidden;
+}
+
+#message_extra {
+  display: none !important;
 }

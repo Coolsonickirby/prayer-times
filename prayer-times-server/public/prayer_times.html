@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prayer Times Server</title>
     {{#css_style}}
-        <link rel="stylesheet" href="{{ . }}">
+    <link rel="stylesheet" href="{{ . }}">
     {{/css_style}}
     <script src="./js/jquery-3.6.0.min.js"></script>
 </head>
@@ -32,8 +32,13 @@
                     </tbody>
                 </table>
             </div>
-            <div class="footer">
-                <div id="message">
+            <div id="message" class="footer">
+                <div>
+                    {message}
+                </div>
+            </div>
+            <div id="message_extra" class="footer">
+                <div>
                     {message}
                 </div>
             </div>
@@ -43,13 +48,17 @@
     <script>
         var use24 = false;
         var messages = [];
+        var messages_extra = [];
         var current_index = 0;
+        var current_extra_index = 0;
         var messages_interval;
+        var messages_interval_extra;
 
         function refreshInformation() {
             $.getJSON("/info", function (data) {
                 use24 = data["format"] == "24";
                 messages = data["messages"];
+                messages_extra = data["messages_extra"];
 
                 document.getElementById("masjid_name").innerHTML = data["masjid_name"];
                 document.getElementById("current_date").innerHTML = data["current_date"];
@@ -75,10 +84,17 @@
                 document.getElementById("prayer_table").append(tr);
 
                 if (messages[0] != undefined && messages[0] != null) {
-                    document.getElementById("message").textContent = messages[0];
+                    document.getElementById("message").querySelector("div").textContent = messages[0];
                     current_index = 0;
                 } else {
-                    document.getElementById("message").textContent = "";
+                    document.getElementById("message").querySelector("div").textContent = "";
+                }
+
+                if (messages_extra[0] != undefined && messages_extra[0] != null) {
+                    document.getElementById("message_extra").querySelector("div").textContent = messages_extra[0];
+                    current_extra_index = 0;
+                } else {
+                    document.getElementById("message_extra").querySelector("div").textContent = "";
                 }
 
                 clearInterval(messages_interval);
@@ -90,10 +106,27 @@
                     }
                     current_index += 1;
 
-                    $("#message").fadeOut(500);
-                    $("#message").promise().done(function () {
-                        $("#message").text(messages[current_index]);
-                        $("#message").fadeIn(500);
+                    $("#message>div").fadeOut(500);
+                    $("#message>div").promise().done(function () {
+                        $("#message>div").text(messages[current_index]);
+                        $("#message>div").fadeIn(500);
+                    });
+
+                }, data["message_display_time"]);
+
+                clearInterval(messages_interval_extra);
+                messages_interval_extra = setInterval(() => {
+                    if (messages_extra.length <= 1) { return; }
+
+                    if (current_extra_index >= messages_extra.length - 1) {
+                        current_extra_index = -1;
+                    }
+                    current_extra_index += 1;
+
+                    $("#message_extra>div").fadeOut(500);
+                    $("#message_extra>div").promise().done(function () {
+                        $("#message_extra>div").text(messages_extra[current_extra_index]);
+                        $("#message_extra>div").fadeIn(500);
                     });
 
                 }, data["message_display_time"]);
