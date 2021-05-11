@@ -147,5 +147,5 @@ table>tbody>tr>td:first-child{
     max-height: 100%;
     margin: 0 auto;
     padding: 0;
-    overflow-y: scroll;
+    overflow-y: hidden;
 }

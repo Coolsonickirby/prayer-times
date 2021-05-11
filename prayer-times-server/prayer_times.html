@@ -43,10 +43,13 @@
         var scroll_pos = 0; //SETTING INITIAL SCROLL TO 0
         var scroll_speed = 0;
         var refresh_message = false;
+        var messages = [];
+        var current_index = 0;
 
         function refreshInformation() {
             $.getJSON("/info", function (data) {
                 use24 = data["format"] == "24";
+                messages = data["messages"];
 
                 document.getElementById("masjid_name").innerHTML = data["masjid_name"];
                 document.getElementById("current_date").innerHTML = data["current_date"];
@@ -72,9 +75,14 @@
                 document.getElementById("prayer_table").append(tr);
 
 
-                document.getElementById("message").textContent = data["message"];
+                if(messages[0] != undefined && messages[0] != null){
+                    document.getElementById("message").textContent = messages[0];
+                    current_index = 0;
+                }else{
+                    document.getElementById("message").textContent = "";
+                }
+
                 scroll_speed = data["scroll_speed"];
-                console.log(data);
             });
         }
 
@@ -104,29 +112,20 @@
         }, 1000);
 
         window.setInterval(function () {
-            if (refresh_message) {
-                return;
-            }
+            if(messages.length <= 1) { return; }
 
-            if (elem.scrollTop >= elem.offsetHeight) {
-                refresh_message = true;
-                setTimeout(() => {
-                    $("#message").fadeOut(500);
-                    $("#message").promise().done(function () {
-                        $("#message").css('display', 'none');
-                        elem.scrollTop = 0;
-                        scroll_pos = 0;
-                        setTimeout(() => {
-                            $("#message").fadeIn(500);
-                            refresh_message = false;
-                        }, 5000);
-                    });
-                }, 3000);
+            if(current_index >= messages.length - 1){
+                current_index = -1;
             }
+            current_index += 1;
 
-            elem.scrollTo({ top: scroll_pos, behavior: 'smooth' });
-            scroll_pos += scroll_speed;
-        }, 50);
+            $("#message").fadeOut(500);
+            $("#message").promise().done(function () {
+                $("#message").text(messages[current_index]);
+                $("#message").fadeIn(500);
+            });
+
+        }, 5000);
 
         refreshInformation();
         document.getElementById("current_time").innerHTML = getTime();
