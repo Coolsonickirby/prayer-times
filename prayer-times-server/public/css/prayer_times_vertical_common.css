@@ -1,0 +1,171 @@
+/* vesper-libre-700 - latin */
+@font-face {
+  font-family: "Vesper Libre";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/vesper-libre-v14-latin-700.eot"); /* IE9 Compat Modes */
+  src: local(""),
+    url("../fonts/vesper-libre-v14-latin-700.eot?#iefix")
+      format("embedded-opentype"),
+    /* IE6-IE8 */ url("../fonts/vesper-libre-v14-latin-700.woff2")
+      format("woff2"),
+    /* Super Modern Browsers */ url("../fonts/vesper-libre-v14-latin-700.woff")
+      format("woff"),
+    /* Modern Browsers */ url("../fonts/vesper-libre-v14-latin-700.ttf")
+      format("truetype"),
+    /* Safari, Android, iOS */
+      url("../fonts/vesper-libre-v14-latin-700.svg#VesperLibre") format("svg"); /* Legacy iOS */
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+  font-family: "Vesper Libre", serif;
+}
+
+html {
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-color: #51a3b5;
+}
+
+.container {
+  margin: 0 auto;
+  width: 85%;
+  height: 98%;
+  margin-top: 40px;
+}
+
+.box {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.box > div {
+  flex: 1 1 auto;
+}
+
+.box > div:first-child {
+  height: 48%;
+}
+
+.header {
+  color: white;
+  background: #188e61;
+  padding: 20px;
+  border: 4px solid white;
+  border-bottom: 7px solid white;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding-bottom: 0;
+}
+
+.header > h2,
+.header > h1 {
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
+  margin-bottom: 5px;
+  font-weight: normal;
+  line-height: 1;
+  font-size: 4.9rem;
+}
+
+#current_time {
+  font-size: 15rem;
+}
+
+.header > h1 {
+  margin-top: 40px;
+  font-size: 5rem;
+  font-weight: bold;
+}
+
+.fade-text {
+  opacity: 1;
+  animation: fade 1s infinite;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.am_pm {
+  font-size: 6rem;
+}
+
+table {
+  width: 100%;
+  text-align: center;
+  color: white;
+  border-collapse: collapse;
+  border: 4px solid white;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+table > tbody > tr {
+  background: #0e5a54;
+}
+
+table > tbody > tr:nth-child(odd) {
+  background: #227d7c;
+}
+
+table > tbody > tr:first-child {
+  background: #086856 !important;
+  border: 4px solid white;
+}
+
+table > tbody > tr:last-child {
+  background: #188e61 !important;
+}
+
+table > tbody > tr > td {
+  padding: 5px;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+  font-size: 8rem;
+  line-height: 2.3;
+}
+
+table > tbody > tr > td:first-child {
+  padding-left: 20px;
+}
+
+.salat_name {
+  text-transform: capitalize;
+}
+
+.footer {
+  border: 4px solid white;
+  border-radius: 15px;
+  background-color: #0e5a54;
+  margin: 0;
+  padding: 50px;
+  color: white;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+  font-size: 6rem;
+  height: 50px;
+  line-height: 1;
+}
+
+.footer > div {
+  max-height: 100%;
+  margin: 0 auto;
+  padding: 0;
+  overflow-y: hidden;
+}

@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prayer Times Server</title>
-    <link rel="stylesheet" id="css_link" href="">
     <script src="./js/jquery-3.6.0.min.js"></script>
 </head>
 
@@ -71,7 +70,10 @@
                 `;
 
                 document.getElementById("prayer_table").append(tr);
-                document.getElementById("css_link").href = data["css_style"];
+
+                data["css_style"].forEach((item) => {
+                    document.getElementsByTagName("head")[0].innerHTML += `<link rel="stylesheet" href="${item}">`;
+                })
 
 
                 if (messages[0] != undefined && messages[0] != null) {

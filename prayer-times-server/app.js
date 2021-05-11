@@ -75,10 +75,16 @@ function getPageData(){
     switch (checkIfObjectExists(data["orientation"]) ? data["orientation"] : ""){
         case "left":
         case "right":
-            data["css_style"] = `./css/prayer_times_vertical_${data["orientation"]}.css`;
+            data["css_style"] = [
+                `./css/prayer_times_vertical_common.css`,
+                `./css/prayer_times_vertical_${data["orientation"]}.css`
+            ];
             break;
         default:
-            data["css_style"] = `./css/prayer_times_vertical_left.css`;
+            data["css_style"] = [
+                `./css/prayer_times_vertical_common.css`,
+                `./css/prayer_times_vertical_left.css`,
+            ];
             break;
     }
 
