@@ -138,11 +138,12 @@ table > tbody > tr > td {
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
   font-size: 8rem;
-  line-height: 2.3;
+  line-height: 1;
 }
 
 table > tbody > tr > td:first-child {
   padding-left: 20px;
+  line-height: 2.3;
 }
 
 .salat_name {
