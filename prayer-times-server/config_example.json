@@ -7,6 +7,7 @@
         "Message 2",
         "Message 3"
     ],
+    "message_display_time": 10,
     "lat": 0.00000,
     "long": 0.0000,
     "format": "12",

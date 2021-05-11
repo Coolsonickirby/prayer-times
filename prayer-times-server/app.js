@@ -33,7 +33,7 @@ function getPrayerTimes() {
 
 function getRenderedPage(page, data, callback){
     let rendered = "";
-    fs.readFile(page, 'utf8', (err, html) => {
+    fs.readFile(__dirname + '/' + page, 'utf8', (err, html) => {
         if (err) { throw err; }
         rendered = mustache.render(html, data);
         callback(rendered);
@@ -59,25 +59,32 @@ function addMinutes(date, minutes) {
     return new Date(date.getTime() + minutes*60000);
 }
 
+function checkIfObjectExists(obj){
+    return (obj != null && obj != undefined);
+}
+
 function getPageData(){
     let date = new Date();
-    let data = config.configData;
+    let data = JSON.parse(JSON.stringify(config.configData));
+
+    data["message_display_time"] = checkIfObjectExists(data["message_display_time"]) ? data["message_display_time"] * 1000 : 10000;
+
     data["current_date"] = `${days[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}`;
+
     let prayer_times = getPrayerTimes();
     ["fajr", "dhuhr", "asr", "maghrib", "isha"].forEach((prayer) => {
         data[prayer] = {};
         data[prayer]["adhan"] = convertPrayerTime(prayer_times[prayer]); 
         data[prayer]["iqama"] = convertPrayerTime(
             addMinutes(prayer_times[prayer], 
-                (config.configData[`${prayer}_iqama`] != null 
-                && 
-                config.configData[`${prayer}_iqama`] != undefined) 
+                checkIfObjectExists(data[`${prayer}_iqama`] )
                 ? 
-                config.configData[`${prayer}_iqama`] 
-                : 
+                data[`${prayer}_iqama`]
+                :
                 10
             ));
     });
+
     return JSON.stringify(data);
 }
 
@@ -88,7 +95,7 @@ function setupServer() {
     app = express();
 
     router.get('/', (req, res) => {
-        getRenderedPage("prayer_times.html", getPageData(), (data, err) => {
+        getRenderedPage("public/prayer_times.html", getPageData(), (data, err) => {
             res.send(data);
         });
     });
@@ -98,7 +105,7 @@ function setupServer() {
     })
 
     app.use(connectLivereload());
-    app.use(express.static(__dirname));
+    app.use(express.static(__dirname + '/public/'));
     app.use('/', router);
     app.listen(9000);
     

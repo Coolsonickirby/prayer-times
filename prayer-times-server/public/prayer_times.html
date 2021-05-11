@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prayer Times Server</title>
-    <link rel="stylesheet" href="prayer_times_vertical.css">
-    <script src="jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="./css/prayer_times_vertical.css">
+    <script src="./js/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -15,6 +15,7 @@
         <div class="box">
             <div>
                 <div class="header">
+                    <h2 id="">{{ message_display_time }}</h2>
                     <h2 id="masjid_name">{masjid_name}</h2>
                     <h2 id="current_date">{current_date}</h2>
                     <h1 id="current_time">X:XX</h1>
@@ -39,12 +40,9 @@
 
     <script>
         var use24 = false;
-        var elem = document.getElementById('message'); //YOUR DIV ELEMENT WHICH YOU WANT TO SCROLL
-        var scroll_pos = 0; //SETTING INITIAL SCROLL TO 0
-        var scroll_speed = 0;
-        var refresh_message = false;
         var messages = [];
         var current_index = 0;
+        var messages_interval;
 
         function refreshInformation() {
             $.getJSON("/info", function (data) {
@@ -75,14 +73,29 @@
                 document.getElementById("prayer_table").append(tr);
 
 
-                if(messages[0] != undefined && messages[0] != null){
+                if (messages[0] != undefined && messages[0] != null) {
                     document.getElementById("message").textContent = messages[0];
                     current_index = 0;
-                }else{
+                } else {
                     document.getElementById("message").textContent = "";
                 }
 
-                scroll_speed = data["scroll_speed"];
+                clearInterval(messages_interval);
+                messages_interval = setInterval(() => {
+                    if (messages.length <= 1) { return; }
+
+                    if (current_index >= messages.length - 1) {
+                        current_index = -1;
+                    }
+                    current_index += 1;
+
+                    $("#message").fadeOut(500);
+                    $("#message").promise().done(function () {
+                        $("#message").text(messages[current_index]);
+                        $("#message").fadeIn(500);
+                    });
+
+                }, data["message_display_time"]);
             });
         }
 
@@ -110,22 +123,6 @@
         setInterval(() => {
             document.getElementById("current_time").innerHTML = getTime();
         }, 1000);
-
-        window.setInterval(function () {
-            if(messages.length <= 1) { return; }
-
-            if(current_index >= messages.length - 1){
-                current_index = -1;
-            }
-            current_index += 1;
-
-            $("#message").fadeOut(500);
-            $("#message").promise().done(function () {
-                $("#message").text(messages[current_index]);
-                $("#message").fadeIn(500);
-            });
-
-        }, 5000);
 
         refreshInformation();
         document.getElementById("current_time").innerHTML = getTime();
