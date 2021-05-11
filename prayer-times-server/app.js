@@ -67,7 +67,16 @@ function getPageData(){
     ["fajr", "dhuhr", "asr", "maghrib", "isha"].forEach((prayer) => {
         data[prayer] = {};
         data[prayer]["adhan"] = convertPrayerTime(prayer_times[prayer]); 
-        data[prayer]["iqama"] = convertPrayerTime(addMinutes(prayer_times[prayer], 20)); 
+        data[prayer]["iqama"] = convertPrayerTime(
+            addMinutes(prayer_times[prayer], 
+                (config.configData[`${prayer}_iqama`] != null 
+                && 
+                config.configData[`${prayer}_iqama`] != undefined) 
+                ? 
+                config.configData[`${prayer}_iqama`] 
+                : 
+                10
+            ));
     });
     return JSON.stringify(data);
 }

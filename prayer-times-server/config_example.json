@@ -9,5 +9,10 @@
     ],
     "lat": 0.00000,
     "long": 0.0000,
-    "format": "12"
+    "format": "12",
+    "fajr_iqama": 20,
+    "dhuhr_iqama": 10,
+    "asr_iqama": 10,
+    "maghrib_iqama": 10,
+    "isha_iqama": 10
 }
