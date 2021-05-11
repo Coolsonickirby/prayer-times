@@ -102,7 +102,7 @@ function getPageData(){
             ));
     });
 
-    return JSON.stringify(data);
+    return data;
 }
 
 function setupServer() {

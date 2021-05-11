@@ -6,6 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prayer Times Server</title>
+    {{#css_style}}
+        <link rel="stylesheet" href="{{ . }}">
+    {{/css_style}}
     <script src="./js/jquery-3.6.0.min.js"></script>
 </head>
 
@@ -14,7 +17,7 @@
         <div class="box">
             <div>
                 <div class="header">
-                    <h2 id="">{{ message_display_time }}</h2>
+                    <h2 id=""></h2>
                     <h2 id="masjid_name">{masjid_name}</h2>
                     <h2 id="current_date">{current_date}</h2>
                     <h1 id="current_time">X:XX</h1>
@@ -70,11 +73,6 @@
                 `;
 
                 document.getElementById("prayer_table").append(tr);
-
-                data["css_style"].forEach((item) => {
-                    document.getElementsByTagName("head")[0].innerHTML += `<link rel="stylesheet" href="${item}">`;
-                })
-
 
                 if (messages[0] != undefined && messages[0] != null) {
                     document.getElementById("message").textContent = messages[0];
