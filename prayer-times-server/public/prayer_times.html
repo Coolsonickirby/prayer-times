@@ -66,6 +66,10 @@
                 document.getElementById("masjid_name").innerHTML = data["masjid_name"];
                 document.getElementById("current_date").innerHTML = data["current_date"];
 
+                Array.from(document.getElementById("prayer_table").querySelectorAll("tr")).forEach((item, index) => {
+                    if(index != 0) { item.remove(); }
+                });
+
                 ["fajr", "dhuhr", "asr", "maghrib", "isha"].forEach((prayer) => {
                     let tr = document.createElement("tr");
                     tr.innerHTML = `
