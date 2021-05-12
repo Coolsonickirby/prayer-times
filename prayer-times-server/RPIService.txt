@@ -1,0 +1,12 @@
+[Service]
+WorkingDirectory=/home/pi/prayer-times/prayer-times-server
+ExecStart=nodemon -e html,css,js,json app.js
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=prayer-service
+User=root
+Group=root
+Environment=NODE_ENV=production
+[Install]
+WantedBy=multi-user.target
