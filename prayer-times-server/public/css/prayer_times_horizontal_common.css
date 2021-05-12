@@ -1,26 +1,105 @@
 .container {
     height: 100%;
+    margin: 0 auto;
+    width: 95%;
 }
 
 .box {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr;
-  gap: 0px 0px;
-  grid-template-areas: ". .";
-  height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-template-areas: ". .";
+    height: 100%;
 }
 
-.salat_name {
-    text-transform: capitalize;
+.header {
+    color: white;
+    background: #188e61;
+    padding: 20px;
+    border: 4px solid white;
+    border-bottom: 7px solid white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding-bottom: 0;
+    margin-top: 20px;
+}
+
+.header>h2,
+.header>h1 {
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
+    margin-bottom: 5px;
+    font-weight: normal;
+    line-height: 1;
+    font-size: 3.9rem;
+}
+
+#masjid_name {
+    margin-top: 20px;
+}
+
+#current_date {
+    margin-top: 20px;
+    font-size: 3.5rem;
+}
+
+#current_time {
+    font-size: 10rem;
+}
+
+.header>h1 {
+    font-size: 5rem;
+    font-weight: bold;
+}
+
+table {
+    width: 100%;
+    text-align: center;
+    color: white;
+    border-collapse: collapse;
+    border: 4px solid white;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    height: 74.2%;
+}
+
+table>tbody>tr {
+    background: #0e5a54;
+}
+
+table>tbody>tr:nth-child(odd) {
+    background: #227d7c;
+}
+
+table>tbody>tr:first-child {
+    background: #086856 !important;
+    border: 4px solid white;
+}
+
+table>tbody>tr:last-child {
+    background: #188e61 !important;
+}
+
+table>tbody>tr>td {
+    padding: 5px;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    font-size: 6rem;
+    line-height: 1;
+}
+
+table>tbody>tr>td:first-child {
+    padding-left: 20px;
+    line-height: 1;
 }
 
 .footer {
     background: #125B55;
     margin: 20px;
     padding: 20px;
-    height: 40%;
-    border: 2px solid white;
-    font-size: 2.5rem;
+    height: 44.5%;
+    border: 4px solid white;
+    font-size: 4.5rem;
     overflow: hidden;
 }
