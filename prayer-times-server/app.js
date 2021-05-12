@@ -42,7 +42,7 @@ function ConfigClass() {
                     "maghrib_iqama": 60,
                     "isha_iqama": 60,
                     "orientation": "normal",
-		    "dhuhr_iqama_static": ""
+                    "dhuhr_iqama_static": ""
                 };
                 return;
             }
@@ -52,9 +52,9 @@ function ConfigClass() {
 
     this.SaveConfig = (callback) => {
         fs.writeFile(CONFIG_PATH, JSON.stringify(this.configData), (err) => {
-            if (err){
+            if (err) {
                 callback(false);
-            }else {
+            } else {
                 callback(true);
             }
         });
@@ -147,7 +147,7 @@ function getPageData(config = false) {
         data[prayer] = {};
         data[prayer]["adhan"] = convertPrayerTime(prayer_times[prayer]);
         data[prayer]["iqama"] = convertPrayerTime(
-	    addMinutes(prayer_times[prayer],
+            addMinutes(prayer_times[prayer],
                 checkIfObjectExists(data[`${prayer}_iqama`])
                     ?
                     data[`${prayer}_iqama`]
@@ -156,8 +156,8 @@ function getPageData(config = false) {
             ));
     });
 
-    if(checkIfObjectExists(dhuhr_iqama_static) && dhuhr_iqama_static != "" && !config){
-	data["dhuhr"]["iqama"] = dhuhr_iqama_static;
+    if (checkIfObjectExists(dhuhr_iqama_static) && dhuhr_iqama_static != "" && !config) {
+        data["dhuhr"]["iqama"] = dhuhr_iqama_static;
     }
 
     return data;
@@ -201,9 +201,9 @@ function setupServer() {
         }
 
         config.SaveConfig((status) => {
-            if(status){
+            if (status) {
                 res.send(`<a href="./config">Successfully saved config!</a>`);
-            }else{
+            } else {
                 res.send(`<a href="./config">Failed saving config!</a>`);
             }
         });
