@@ -49,12 +49,12 @@ function ConfigClass() {
         });
     }
 
-    this.SaveConfig = () => {
+    this.SaveConfig = (callback) => {
         fs.writeFile(CONFIG_PATH, JSON.stringify(this.configData), (err) => {
             if (err){
-                return false;
+                callback(false);
             }else {
-                return true;
+                callback(true);
             }
         });
     }
@@ -191,11 +191,13 @@ function setupServer() {
             config.configData["messages_extra"][i] = config.configData["messages_extra"][i].replace(/\n/g, "<br>");
         }
 
-        if(config.SaveConfig()){
-            res.send(`<a href="./config">Successfully saved config!</a>`);
-        }else {
-            res.send(`<a href="./config">Failed saving config!</a>`);
-        }
+        config.SaveConfig((status) => {
+            if(status){
+                res.send(`<a href="./config">Successfully saved config!</a>`);
+            }else{
+                res.send(`<a href="./config">Failed saving config!</a>`);
+            }
+        });
     })
 
     app.use(express.json());
