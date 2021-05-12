@@ -37,42 +37,46 @@
                 <label for="masjid_name">Masjid Name:</label>
                 <input id="masjid_name" name="masjid_name" placeholder="Masjid Name Here" value="{{ masjid_name }}">
             </div>
-    
+
             <div class="form-input">
                 <label for="lat">Latitude:</label>
                 <input id="lat" id="lat" placeholder="Latitude" value="{{ lat }}">
             </div>
-    
+
             <div class="form-input">
                 <label for="long">Longitude:</label>
                 <input id="long" name="long" placeholder="Longitude" value="{{ long }}">
             </div>
-    
+
             <div class="form-input">
                 <label for="fajr_iqama">Fajr Iqama:</label>
-                <input id="fajr_iqama" name="fajr_iqama" type="number" placeholder="Fajr Iqama" value="{{ fajr_iqama }}">
+                <input id="fajr_iqama" name="fajr_iqama" type="number" placeholder="Fajr Iqama"
+                    value="{{ fajr_iqama }}">
             </div>
-    
+
             <div class="form-input">
                 <label for="dhuhr_iqama">Dhuhr Iqama:</label>
-                <input id="dhuhr_iqama" name="dhuhr_iqama" type="number" placeholder="Dhuhr Iqama" value="{{ dhuhr_iqama }}">
+                <input id="dhuhr_iqama" name="dhuhr_iqama" type="number" placeholder="Dhuhr Iqama"
+                    value="{{ dhuhr_iqama }}">
             </div>
-    
+
             <div class="form-input">
                 <label for="asr_iqama">Asr Iqama:</label>
                 <input id="asr_iqama" name="asr_iqama" type="number" placeholder="Asr Iqama" value="{{ asr_iqama }}">
             </div>
-    
+
             <div class="form-input">
                 <label for="maghrib_iqama">Maghrib Iqama:</label>
-                <input id="maghrib_iqama" name="maghrib_iqama" type="number" placeholder="Maghrib Iqama" value="{{ maghrib_iqama }}">
+                <input id="maghrib_iqama" name="maghrib_iqama" type="number" placeholder="Maghrib Iqama"
+                    value="{{ maghrib_iqama }}">
             </div>
-    
+
             <div class="form-input">
                 <label for="isha_iqama">Isha Iqama:</label>
-                <input id="isha_iqama" name="isha_iqama" type="number" placeholder="Isha Iqama" value="{{ isha_iqama }}">
+                <input id="isha_iqama" name="isha_iqama" type="number" placeholder="Isha Iqama"
+                    value="{{ isha_iqama }}">
             </div>
-    
+
             <div class="form-input">
                 <label for="orientation">Orientation:</label>
                 <select id="orientation" name="orientation">
@@ -82,12 +86,15 @@
                     <option value="right">Right (Vertical)</option>
                 </select>
             </div>
-    
-            <div class="form-input">
+
+            <div class="form-messages">
                 <div>
                     <label for="messages">Messages:</label>
-                    <button type="button" onclick="AddMessage('messages')">+</button>
-                    <button type="button" onclick="RemoveMessage('messages')">-</button>
+                    <br>
+                    <div style="width: 100%;">
+                        <button style="width: 25%;" type="button" onclick="AddMessage('messages')">+</button>
+                        <button style="width: 25%;" type="button" onclick="RemoveMessage('messages')">-</button>
+                    </div>
                 </div>
                 <div id="messages">
                     {{ #messages }}
@@ -95,20 +102,24 @@
                     {{ /messages }}
                 </div>
             </div>
-    
-            <div class="form-input">
+
+            <div class="form-messages">
                 <div>
                     <label for="messages_extra">Messages Extra (Only for Horizontal Orientation):</label>
-                    <button type="button" onclick="AddMessage('messages_extra')">+</button>
-                    <button type="button" onclick="RemoveMessage('messages_extra')">-</button>
+                    <br>
+                    <div style="width: 100%;">
+                        <button style="width: 25%;" type="button" onclick="AddMessage('messages_extra')">+</button>
+                        <button style="width: 25%;" type="button" onclick="RemoveMessage('messages_extra')">-</button>
+                    </div>
                 </div>
                 <div id="messages_extra">
                     {{ #messages_extra }}
-                    <textarea name="messages_extra[]" class="messages_extra" placeholder="Enter Message Here">{{ . }}</textarea>
+                    <textarea name="messages_extra[]" class="messages_extra"
+                        placeholder="Enter Message Here">{{ . }}</textarea>
                     {{ /messages_extra }}
                 </div>
             </div>
-    
+
             <button type="submit">Save Information</button>
         </form>
     </div>

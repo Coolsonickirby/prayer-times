@@ -87,7 +87,7 @@ function removeEntry(id) {
 }
 
 function loadConfigPage(ip_addr) {
-    window.location.href = `http://${ip_addr}:9000/config`;
+    var ref = window.open(`http://${ip_addr}:9000/config`);
 }
 
 function saveEntries() {

@@ -12,10 +12,18 @@
   margin-bottom: 10px;
 }
 
-.form-input textarea {
+.form-messages {
+    margin-bottom: 10px;
+}
+
+.form-messages>div:first-child {
+    margin-bottom: 10px;
+}
+
+.form-messages textarea {
     resize: none;
     width: 100%;
     height: 150px;
-    font-size: 1.3rem;
+    font-size: 0.9rem;
     margin-bottom: 10px;
 }
