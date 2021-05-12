@@ -1,0 +1,7 @@
+html {
+  background-image: url("../img/horizontal_background_normal.png");
+}
+
+body {
+  transform: rotate(-180deg);
+}
