@@ -103,7 +103,7 @@ function checkIfObjectExists(obj) {
     return (obj != null && obj != undefined);
 }
 
-function getPageData(var config = false) {
+function getPageData(config = false) {
 
     let date = new Date();
     let data = JSON.parse(JSON.stringify(config.configData));
