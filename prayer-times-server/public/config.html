@@ -37,7 +37,7 @@
         }
 
         function RemoveMessage(id) {
-            document.getElementById(id).lastChild.remove();
+            document.querySelector(`#${id}>textarea:last-child`).remove();
         }
     </script>
 </head>
@@ -102,7 +102,7 @@
             </div>
 
             <div class="form-input">
-                <label for="message_display_time">Message Speed:</label>
+                <label for="message_display_time">Message Speed (Seconds):</label>
                 <input id="message_display_time" type="number" name="message_display_time" placeholder="Message Speed"
                     value="{{ message_original_display_time }}">
             </div>
