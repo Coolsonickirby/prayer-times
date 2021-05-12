@@ -41,7 +41,8 @@ function ConfigClass() {
                     "asr_iqama": 60,
                     "maghrib_iqama": 60,
                     "isha_iqama": 60,
-                    "orientation": "normal"
+                    "orientation": "normal",
+		    "dhuhr_iqama_static": ""
                 };
                 return;
             }
@@ -102,7 +103,8 @@ function checkIfObjectExists(obj) {
     return (obj != null && obj != undefined);
 }
 
-function getPageData() {
+function getPageData(var config = false) {
+
     let date = new Date();
     let data = JSON.parse(JSON.stringify(config.configData));
 
@@ -138,12 +140,14 @@ function getPageData() {
         data["messages_extra"] = [];
     }
 
+    let dhuhr_iqama_static = data["dhuhr_iqama_static"];
+
     let prayer_times = getPrayerTimes();
     ["fajr", "dhuhr", "asr", "maghrib", "isha"].forEach((prayer) => {
         data[prayer] = {};
         data[prayer]["adhan"] = convertPrayerTime(prayer_times[prayer]);
         data[prayer]["iqama"] = convertPrayerTime(
-            addMinutes(prayer_times[prayer],
+	    addMinutes(prayer_times[prayer],
                 checkIfObjectExists(data[`${prayer}_iqama`])
                     ?
                     data[`${prayer}_iqama`]
@@ -151,6 +155,10 @@ function getPageData() {
                     10
             ));
     });
+
+    if(checkIfObjectExists(dhuhr_iqama_static) && dhuhr_iqama_static != "" && !config){
+	data["dhuhr"]["iqama"] = dhuhr_iqama_static;
+    }
 
     return data;
 }
@@ -172,7 +180,7 @@ function setupServer() {
     });
 
     router.get('/config', (req, res) => {
-        getRenderedPage("public/config.html", getPageData(), (data, err) => {
+        getRenderedPage("public/config.html", getPageData(true), (data, err) => {
             res.send(data);
         });
     });
