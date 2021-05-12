@@ -9,6 +9,13 @@
     <link rel="stylesheet" href="./css/config.css">
     <script>
         window.onload = () => {
+            var selected = document.getElementById("orientation_mustache").textContent;
+            
+            if(selected == "normal") { document.getElementById("orientation").options.selectedIndex = 0; }
+            else if (selected == "left") { document.getElementById("orientation").options.selectedIndex = 1; }
+            else if (selected == "flipped") { document.getElementById("orientation").options.selectedIndex = 2; }
+            else if (selected == "right") { document.getElementById("orientation").options.selectedIndex = 3; }
+
             Array.from(document.querySelectorAll('.messages')).forEach(item => {
                 item.value = item.value.replace(/\<br\>/g, "\n");
             });
@@ -32,6 +39,7 @@
 
 <body>
     <div class="container">
+        <span style="display: none;" id="orientation_mustache">{{ orientation }}</span>
         <form action="/config" method="POST">
             <div class="form-input">
                 <label for="masjid_name">Masjid Name:</label>

@@ -2,9 +2,13 @@ const STORAGE_KEY = "prayer_entries";
 var entries = [];
 loadEntries();
 
+document.addEventListener("deviceready", onDeviceReady, false);
+function onDeviceReady() {
+    window.open = cordova.InAppBrowser.open;
+}
+
 window.onload = () => {
     displayEntries();
-
 }
 
 function ShowModal(id) {

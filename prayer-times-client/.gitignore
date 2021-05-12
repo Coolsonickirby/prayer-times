@@ -9,3 +9,4 @@ node_modules/
 
 config.xml
 package.json
+package-lock.json
