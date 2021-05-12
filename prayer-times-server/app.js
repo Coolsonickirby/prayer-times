@@ -49,7 +49,7 @@ function ConfigClass() {
             this.configData = JSON.parse(data);
         });
     }
-
+    
     this.SaveConfig = (callback) => {
         fs.writeFile(CONFIG_PATH, JSON.stringify(this.configData), (err) => {
             if (err) {
@@ -103,9 +103,10 @@ function checkIfObjectExists(obj) {
     return (obj != null && obj != undefined);
 }
 
-function getPageData(config = false) {
+function getPageData(config_page = false) {
 
     let date = new Date();
+    console.log(config.configData);
     let data = JSON.parse(JSON.stringify(config.configData));
 
     data["message_original_display_time"] = data["message_display_time"];
@@ -156,7 +157,7 @@ function getPageData(config = false) {
             ));
     });
 
-    if (checkIfObjectExists(dhuhr_iqama_static) && dhuhr_iqama_static != "" && !config) {
+    if (checkIfObjectExists(dhuhr_iqama_static) && dhuhr_iqama_static != "" && !config_page) {
         data["dhuhr"]["iqama"] = dhuhr_iqama_static;
     }
 
