@@ -12,10 +12,11 @@ var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
 var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 function ConfigClass() {
+    const CONFIG_PATH = "config.json";
     this.configData = {};
 
     this.ReadConfig = () => {
-        fs.readFile('config.json', 'utf8', (err, data) => {
+        fs.readFile(CONFIG_PATH, 'utf8', (err, data) => {
             if (err) {
                 this.configData = {
                     "masjid_name": "My Masjid",
@@ -49,7 +50,13 @@ function ConfigClass() {
     }
 
     this.SaveConfig = () => {
-
+        fs.writeFile(CONFIG_PATH, JSON.stringify(this.configData), (err) => {
+            if (err){
+                return false;
+            }else {
+                return true;
+            }
+        });
     }
 }
 
@@ -184,8 +191,11 @@ function setupServer() {
             config.configData["messages_extra"][i] = config.configData["messages_extra"][i].replace(/\n/g, "<br>");
         }
 
-        config.SaveConfig();
-        res.send(`<a href="./config">Successfully saved config!</a>`);
+        if(config.SaveConfig()){
+            res.send(`<a href="./config">Successfully saved config!</a>`);
+        }else {
+            res.send(`<a href="./config">Failed saving config!</a>`);
+        }
     })
 
     app.use(express.json());
