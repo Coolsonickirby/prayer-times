@@ -106,6 +106,7 @@ function getPageData() {
     let date = new Date();
     let data = JSON.parse(JSON.stringify(config.configData));
 
+    data["message_original_display_time"] = data["message_display_time"];
     data["message_display_time"] = checkIfObjectExists(data["message_display_time"]) ? data["message_display_time"] * 1000 : 10000;
 
     data["current_date"] = `${days[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}`;
