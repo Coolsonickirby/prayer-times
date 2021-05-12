@@ -65,7 +65,7 @@ var config = new ConfigClass();
 function getPrayerTimes() {
     var coordinates = new adhan.Coordinates(config.configData["lat"], config.configData["long"]);
     var params = adhan.CalculationMethod.NorthAmerica();
-    params.madhab = adhan.Madhab.Hanafi;
+    params.madhab = adhan.Madhab.Shafi;
     prayer_times = new adhan.PrayerTimes(coordinates, new Date(), params);
     return prayer_times;
 }
