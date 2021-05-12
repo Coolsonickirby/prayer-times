@@ -28,6 +28,7 @@
             let new_textarea = document.createElement("textarea");
             new_textarea.classList.add(id);
             new_textarea.placeholder = "Enter Message Here";
+            new_textarea.name = `${id}[]`;
             document.getElementById(id).append(new_textarea);
         }
 
