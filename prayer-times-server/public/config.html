@@ -11,14 +11,14 @@
         window.onload = () => {
             var selected = document.getElementById("orientation_mustache").textContent;
             var selected_format = document.getElementById("format_mustache").textContent;
-            
-            if(selected == "normal") { document.getElementById("orientation").options.selectedIndex = 0; }
+
+            if (selected == "normal") { document.getElementById("orientation").options.selectedIndex = 0; }
             else if (selected == "left") { document.getElementById("orientation").options.selectedIndex = 1; }
             else if (selected == "flipped") { document.getElementById("orientation").options.selectedIndex = 2; }
             else if (selected == "right") { document.getElementById("orientation").options.selectedIndex = 3; }
 
-            if(selected_format == "12") { document.getElementById("format").options.selectedIndex = 0; }
-            else if(selected_format == "24") { document.getElementById("format").options.selectedIndex = 1; }
+            if (selected_format == "12") { document.getElementById("format").options.selectedIndex = 0; }
+            else if (selected_format == "24") { document.getElementById("format").options.selectedIndex = 1; }
 
             Array.from(document.querySelectorAll('.messages')).forEach(item => {
                 item.value = item.value.replace(/\<br\>/g, "\n");
@@ -93,14 +93,12 @@
 
             <div class="form-input">
                 <label for="jummah_adhan">Jummah Adhan:</label>
-                <input id="jummah_adhan" name="jummah_adhan" placeholder="Jummah Adhan"
-                    value="{{ jummah_adhan }}">
+                <input id="jummah_adhan" name="jummah_adhan" placeholder="Jummah Adhan" value="{{ jummah_adhan }}">
             </div>
 
             <div class="form-input">
                 <label for="jummah_iqama">Jummah Iqama:</label>
-                <input id="jummah_iqama" name="jummah_iqama" placeholder="Jummah Iqama"
-                    value="{{ jummah_iqama }}">
+                <input id="jummah_iqama" name="jummah_iqama" placeholder="Jummah Iqama" value="{{ jummah_iqama }}">
             </div>
 
             <div class="form-input">
