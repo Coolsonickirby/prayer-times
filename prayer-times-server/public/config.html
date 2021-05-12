@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Config</title>
+    <link rel="stylesheet" href="./css/config.css">
+    <script>
+        window.onload = () => {
+            Array.from(document.querySelectorAll('.messages')).forEach(item => {
+                item.value = item.value.replace(/\<br\>/g, "\n");
+            });
+            Array.from(document.querySelectorAll('.messages_extra')).forEach(item => {
+                item.value = item.value.replace(/\<br\>/g, "\n");
+            });
+        }
+
+        function AddMessage(id) {
+            let new_textarea = document.createElement("textarea");
+            new_textarea.classList.add(id);
+            new_textarea.placeholder = "Enter Message Here";
+            document.getElementById(id).append(new_textarea);
+        }
+
+        function RemoveMessage(id) {
+            document.getElementById(id).lastChild.remove();
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <form action="/config" method="POST">
+            <div class="form-input">
+                <label for="masjid_name">Masjid Name:</label>
+                <input id="masjid_name" name="masjid_name" placeholder="Masjid Name Here" value="{{ masjid_name }}">
+            </div>
+    
+            <div class="form-input">
+                <label for="lat">Latitude:</label>
+                <input id="lat" id="lat" placeholder="Latitude" value="{{ lat }}">
+            </div>
+    
+            <div class="form-input">
+                <label for="long">Longitude:</label>
+                <input id="long" name="long" placeholder="Longitude" value="{{ long }}">
+            </div>
+    
+            <div class="form-input">
+                <label for="fajr_iqama">Fajr Iqama:</label>
+                <input id="fajr_iqama" name="fajr_iqama" type="number" placeholder="Fajr Iqama" value="{{ fajr_iqama }}">
+            </div>
+    
+            <div class="form-input">
+                <label for="dhuhr_iqama">Dhuhr Iqama:</label>
+                <input id="dhuhr_iqama" name="dhuhr_iqama" type="number" placeholder="Dhuhr Iqama" value="{{ dhuhr_iqama }}">
+            </div>
+    
+            <div class="form-input">
+                <label for="asr_iqama">Asr Iqama:</label>
+                <input id="asr_iqama" name="asr_iqama" type="number" placeholder="Asr Iqama" value="{{ asr_iqama }}">
+            </div>
+    
+            <div class="form-input">
+                <label for="maghrib_iqama">Maghrib Iqama:</label>
+                <input id="maghrib_iqama" name="maghrib_iqama" type="number" placeholder="Maghrib Iqama" value="{{ maghrib_iqama }}">
+            </div>
+    
+            <div class="form-input">
+                <label for="isha_iqama">Isha Iqama:</label>
+                <input id="isha_iqama" name="isha_iqama" type="number" placeholder="Isha Iqama" value="{{ isha_iqama }}">
+            </div>
+    
+            <div class="form-input">
+                <label for="orientation">Orientation:</label>
+                <select id="orientation" name="orientation">
+                    <option value="normal">Normal (Horizontal)</option>
+                    <option value="left">Left (Vertical)</option>
+                    <option value="flipped">Flipped (Horizontal)</option>
+                    <option value="right">Right (Vertical)</option>
+                </select>
+            </div>
+    
+            <div class="form-input">
+                <div>
+                    <label for="messages">Messages:</label>
+                    <button type="button" onclick="AddMessage('messages')">+</button>
+                    <button type="button" onclick="RemoveMessage('messages')">-</button>
+                </div>
+                <div id="messages">
+                    {{ #messages }}
+                    <textarea name="messages[]" class="messages" placeholder="Enter Message Here">{{ . }}</textarea>
+                    {{ /messages }}
+                </div>
+            </div>
+    
+            <div class="form-input">
+                <div>
+                    <label for="messages_extra">Messages Extra (Only for Horizontal Orientation):</label>
+                    <button type="button" onclick="AddMessage('messages_extra')">+</button>
+                    <button type="button" onclick="RemoveMessage('messages_extra')">-</button>
+                </div>
+                <div id="messages_extra">
+                    {{ #messages_extra }}
+                    <textarea name="messages_extra[]" class="messages_extra" placeholder="Enter Message Here">{{ . }}</textarea>
+                    {{ /messages_extra }}
+                </div>
+            </div>
+    
+            <button type="submit">Save Information</button>
+        </form>
+    </div>
+</body>
+
+</html>

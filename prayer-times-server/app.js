@@ -16,9 +16,40 @@ function ConfigClass() {
 
     this.ReadConfig = () => {
         fs.readFile('config.json', 'utf8', (err, data) => {
-            if (err) { throw err; }
+            if (err) {
+                this.configData = {
+                    "masjid_name": "My Masjid",
+                    "jummah_adhan": "12:30 PM",
+                    "jummah_iqama": "12:30 PM",
+                    "messages": [
+                        "Message 1",
+                        "Message 2",
+                        "Message 3"
+                    ],
+                    "messages_extra": [
+                        "Extra Message 1",
+                        "Extra Message 2",
+                        "Extra Message 3"
+                    ],
+                    "message_display_time": 10,
+                    "lat": 0.000000,
+                    "long": 0.000000,
+                    "format": "12",
+                    "fajr_iqama": 60,
+                    "dhuhr_iqama": 60,
+                    "asr_iqama": 60,
+                    "maghrib_iqama": 60,
+                    "isha_iqama": 60,
+                    "orientation": "normal"
+                };
+                return;
+            }
             this.configData = JSON.parse(data);
         });
+    }
+
+    this.SaveConfig = () => {
+
     }
 }
 
@@ -130,8 +161,35 @@ function setupServer() {
 
     router.get('/info', (req, res) => {
         res.send(getPageData());
+    });
+
+    router.get('/config', (req, res) => {
+        getRenderedPage("public/config.html", getPageData(), (data, err) => {
+            res.send(data);
+        });
+    });
+
+    router.post('/config', (req, res) => {
+        for (const key in req.body) {
+            if (key in config.configData) {
+                config.configData[key] = req.body[key];
+            }
+        }
+
+        for (let i = 0; i < config.configData["messages"].length; i++) {
+            config.configData["messages"][i] = config.configData["messages"][i].replace(/\n/g, "<br>");
+        }
+
+        for (let i = 0; i < config.configData["messages_extra"].length; i++) {
+            config.configData["messages_extra"][i] = config.configData["messages_extra"][i].replace(/\n/g, "<br>");
+        }
+
+        config.SaveConfig();
+        res.send(`<a href="./config">Successfully saved config!</a>`);
     })
 
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
     app.use(connectLivereload());
     app.use(express.static(__dirname + '/public/'));
     app.use('/', router);

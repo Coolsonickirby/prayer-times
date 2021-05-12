@@ -91,17 +91,17 @@
                 document.getElementById("prayer_table").append(tr);
 
                 if (messages[0] != undefined && messages[0] != null) {
-                    document.getElementById("message").querySelector("div").textContent = messages[0];
+                    document.getElementById("message").querySelector("div").innerHTML = messages[0];
                     current_index = 0;
                 } else {
-                    document.getElementById("message").querySelector("div").textContent = "";
+                    document.getElementById("message").querySelector("div").innerHTML = "";
                 }
 
                 if (messages_extra[0] != undefined && messages_extra[0] != null) {
-                    document.getElementById("message_extra").querySelector("div").textContent = messages_extra[0];
+                    document.getElementById("message_extra").querySelector("div").innerHTML = messages_extra[0];
                     current_extra_index = 0;
                 } else {
-                    document.getElementById("message_extra").querySelector("div").textContent = "";
+                    document.getElementById("message_extra").querySelector("div").innerHTML = "";
                 }
 
                 clearInterval(messages_interval);
@@ -115,7 +115,7 @@
 
                     $("#message>div").fadeOut(500);
                     $("#message>div").promise().done(function () {
-                        $("#message>div").text(messages[current_index]);
+                        $("#message>div").html(messages[current_index]);
                         $("#message>div").fadeIn(500);
                     });
 
@@ -132,7 +132,7 @@
 
                     $("#message_extra>div").fadeOut(500);
                     $("#message_extra>div").promise().done(function () {
-                        $("#message_extra>div").text(messages_extra[current_extra_index]);
+                        $("#message_extra>div").html(messages_extra[current_extra_index]);
                         $("#message_extra>div").fadeIn(500);
                     });
 
