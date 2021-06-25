@@ -93,7 +93,7 @@ function convertPrayerTime(prayerTime) {
             break;
         case "12":
         default:
-            result = DateTime.fromJSDate(prayerTime).toLocaleString(DateTime.TIME_SIMPLE);
+            result = DateTime.fromJSDate(prayerTime).toFormat("h:mm a");
             break;
     }
     return result;
