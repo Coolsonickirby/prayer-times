@@ -1,3 +1,4 @@
+const hijri = require('hijri-date');
 const express = require('express');
 const router = express.Router();
 const mustache = require('mustache');
@@ -10,6 +11,9 @@ const { exec } = require("child_process");
 
 var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+var hijri_days = ["Ahad", "Ithnin", "Thulatha", "Arbaa", "Khams", "Jumuah", "Sabt"];
+var hijri_months = ["Muharram", "Safar", "Rabi'ul Awwal", "Rabi'ul Akhir", "Jumadal Ula", "Jumadal Akhira", "Rajab", "Sha'ban", "Ramadan", "Shawwal", "Dhul Qa'ada", "Dhul Hijja"];
 
 function ConfigClass() {
     const CONFIG_PATH = "config.json";
@@ -49,7 +53,7 @@ function ConfigClass() {
             this.configData = JSON.parse(data);
         });
     }
-    
+
     this.SaveConfig = (callback) => {
         fs.writeFile(CONFIG_PATH, JSON.stringify(this.configData), (err) => {
             if (err) {
@@ -104,9 +108,7 @@ function checkIfObjectExists(obj) {
 }
 
 function getPageData(config_page = false) {
-
     let date = new Date();
-    console.log(config.configData);
     let data = JSON.parse(JSON.stringify(config.configData));
 
     data["message_original_display_time"] = data["message_display_time"];
@@ -149,11 +151,9 @@ function getPageData(config_page = false) {
         data[prayer]["adhan"] = convertPrayerTime(prayer_times[prayer]);
         data[prayer]["iqama"] = convertPrayerTime(
             addMinutes(prayer_times[prayer],
-                checkIfObjectExists(data[`${prayer}_iqama`])
-                    ?
-                    data[`${prayer}_iqama`]
-                    :
-                    10
+                checkIfObjectExists(data[`${prayer}_iqama`]) ?
+                data[`${prayer}_iqama`] :
+                10
             ));
     });
 
@@ -161,6 +161,9 @@ function getPageData(config_page = false) {
         data["dhuhr"]["iqama"] = dhuhr_iqama_static;
     }
 
+    var hijri_info = date.toHijri();
+    data["current_date"] = data["current_date"] + `<br>${hijri_days[hijri_info.getDay()]}, ${hijri_months[hijri_info.getMonth() - 1]} ${hijri_info.getDate() - 1}`;
+    console.log(data);
     return data;
 }
 

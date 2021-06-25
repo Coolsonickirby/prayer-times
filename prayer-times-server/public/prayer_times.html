@@ -6,10 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prayer Times Server</title>
-    <link rel="stylesheet" href="./css/prayer_times_common.css">
-    {{#css_style}}
-    <link rel="stylesheet" href="{{ . }}">
-    {{/css_style}}
+    <link rel="stylesheet" href="./css/prayer_times_common.css"> {{#css_style}}
+    <link rel="stylesheet" href="{{ . }}"> {{/css_style}}
     <script src="./js/jquery-3.6.0.min.js"></script>
 </head>
 
@@ -58,7 +56,7 @@
         var current_day = new Date();
 
         function refreshInformation() {
-            $.getJSON("/info", function (data) {
+            $.getJSON("/info", function(data) {
                 use24 = data["format"] == "24";
                 messages = data["messages"];
                 messages_extra = data["messages_extra"];
@@ -67,7 +65,9 @@
                 document.getElementById("current_date").innerHTML = data["current_date"];
 
                 Array.from(document.getElementById("prayer_table").querySelectorAll("tr")).forEach((item, index) => {
-                    if(index != 0) { item.remove(); }
+                    if (index != 0) {
+                        item.remove();
+                    }
                 });
 
                 ["fajr", "dhuhr", "asr", "maghrib", "isha"].forEach((prayer) => {
@@ -106,7 +106,9 @@
 
                 clearInterval(messages_interval);
                 messages_interval = setInterval(() => {
-                    if (messages.length <= 1) { return; }
+                    if (messages.length <= 1) {
+                        return;
+                    }
 
                     if (current_index >= messages.length - 1) {
                         current_index = -1;
@@ -114,7 +116,7 @@
                     current_index += 1;
 
                     $("#message>div").fadeOut(500);
-                    $("#message>div").promise().done(function () {
+                    $("#message>div").promise().done(function() {
                         $("#message>div").html(messages[current_index]);
                         $("#message>div").fadeIn(500);
                     });
@@ -123,7 +125,9 @@
 
                 clearInterval(messages_interval_extra);
                 messages_interval_extra = setInterval(() => {
-                    if (messages_extra.length <= 1) { return; }
+                    if (messages_extra.length <= 1) {
+                        return;
+                    }
 
                     if (current_extra_index >= messages_extra.length - 1) {
                         current_extra_index = -1;
@@ -131,7 +135,7 @@
                     current_extra_index += 1;
 
                     $("#message_extra>div").fadeOut(500);
-                    $("#message_extra>div").promise().done(function () {
+                    $("#message_extra>div").promise().done(function() {
                         $("#message_extra>div").html(messages_extra[current_extra_index]);
                         $("#message_extra>div").fadeIn(500);
                     });
@@ -143,7 +147,9 @@
         function getTime() {
             let date = new Date();
             let time = `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
-            if (use24) { return time; }
+            if (use24) {
+                return time;
+            }
 
             let res = time.split(":");
             let hours = parseInt(res[0]);
@@ -161,19 +167,19 @@
             return `${hours}<span class="fade-text">:</span>${res[1].toString().padStart(2, '0')} <span class="am_pm">${am_pm}</span>`;
         }
 
-        function isNewDay(){
+        function isNewDay() {
             var date = new Date();
-            if(date.toDateString() != current_day.toDateString()){
+            if (date.toDateString() != current_day.toDateString()) {
                 current_day = date;
                 return true;
-            }else {
+            } else {
                 return false;
             }
         }
 
         setInterval(() => {
             document.getElementById("current_time").innerHTML = getTime();
-            if(isNewDay()){
+            if (isNewDay()) {
                 refreshInformation();
             }
         }, 1000);
