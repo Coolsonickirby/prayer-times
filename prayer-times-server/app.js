@@ -191,9 +191,7 @@ function setupServer() {
 
     router.post('/config', (req, res) => {
         for (const key in req.body) {
-            if (key in config.configData) {
-                config.configData[key] = req.body[key];
-            }
+            config.configData[key] = req.body[key];
         }
 
         for (let i = 0; i < config.configData["messages"].length; i++) {
