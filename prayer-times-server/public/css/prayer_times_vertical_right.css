@@ -4,6 +4,7 @@ html {
 
 body {
     transform: rotate(90deg);
+    margin-left: -10px;
     transform-origin: bottom left;
     position: absolute;
     top: -100vw;
