@@ -1,12 +1,12 @@
 html {
-  background-image: url("../img/vertical_background_right.png");
+    background-image: url("../img/vertical_background_right.png");
 }
 
 body {
-  transform: rotate(90deg);
-  transform-origin: bottom left;
-  position: absolute;
-  top: -100vw;
-  height: 100vw;
-  width: 100vh;
+    transform: rotate(90deg);
+    transform-origin: bottom left;
+    position: absolute;
+    top: -100vw;
+    height: 100vw;
+    width: 100vh;
 }
