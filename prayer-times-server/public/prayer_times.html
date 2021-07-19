@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="notranslate" translate="no">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
     <title>Prayer Times Server</title>
     <link rel="stylesheet" href="./css/prayer_times_common.css"> {{#css_style}}
     <link rel="stylesheet" href="{{ . }}"> {{/css_style}}
@@ -102,6 +103,30 @@
                     current_extra_index = 0;
                 } else {
                     document.getElementById("message_extra").querySelector("div").innerHTML = "";
+                }
+
+                if ("table_font_size" in data) {
+                    if (data["table_font_size"] != "") {
+                        Array.from(document.getElementById("prayer_table").querySelectorAll("tr>td")).forEach(item => {
+                            item.style.fontSize = data["table_font_size"] + 'vw';
+                        });
+                    }
+                }
+
+                if ("messages_font_size" in data) {
+                    if (data["messages_font_size"] != "") {
+                        Array.from(document.getElementById("message").querySelectorAll("div")).forEach(item => {
+                            item.style.fontSize = data["messages_font_size"] + 'vw';
+                        });
+                    }
+                }
+
+                if ("extra_messages_font_size" in data) {
+                    if (data["extra_messages_font_size"] != "") {
+                        Array.from(document.getElementById("message_extra").querySelectorAll("div")).forEach(item => {
+                            item.style.fontSize = data["extra_messages_font_size"] + 'vw';
+                        });
+                    }
                 }
 
                 clearInterval(messages_interval);

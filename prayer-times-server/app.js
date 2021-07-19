@@ -46,7 +46,6 @@ function ConfigClass() {
                     "maghrib_iqama": 60,
                     "isha_iqama": 60,
                     "orientation": "normal",
-                    "dhuhr_iqama_static": ""
                 };
                 return;
             }
@@ -143,23 +142,17 @@ function getPageData(config_page = false) {
         data["messages_extra"] = [];
     }
 
-    let dhuhr_iqama_static = data["dhuhr_iqama_static"];
-
     let prayer_times = getPrayerTimes();
     ["fajr", "dhuhr", "asr", "maghrib", "isha"].forEach((prayer) => {
         data[prayer] = {};
         data[prayer]["adhan"] = convertPrayerTime(prayer_times[prayer]);
-        data[prayer]["iqama"] = convertPrayerTime(
+        data[prayer]["iqama"] = checkIfObjectExists(data[`${prayer}_iqama_static`]) && data[`${prayer}_iqama_static`] != "" && !config_page ? data[`${prayer}_iqama_static`] : convertPrayerTime(
             addMinutes(prayer_times[prayer],
                 checkIfObjectExists(data[`${prayer}_iqama`]) ?
                 data[`${prayer}_iqama`] :
                 10
             ));
     });
-
-    if (checkIfObjectExists(dhuhr_iqama_static) && dhuhr_iqama_static != "" && !config_page) {
-        data["dhuhr"]["iqama"] = dhuhr_iqama_static;
-    }
 
     var hijri_info = date.toHijri();
     data["current_date"] = data["current_date"] + `<br>${hijri_days[hijri_info.getDay()]}, ${hijri_months[hijri_info.getMonth() - 1]} ${hijri_info.getDate() - 1}`;
@@ -192,14 +185,6 @@ function setupServer() {
     router.post('/config', (req, res) => {
         for (const key in req.body) {
             config.configData[key] = req.body[key];
-        }
-
-        for (let i = 0; i < config.configData["messages"].length; i++) {
-            config.configData["messages"][i] = config.configData["messages"][i].replace(/\n/g, "<br>");
-        }
-
-        for (let i = 0; i < config.configData["messages_extra"].length; i++) {
-            config.configData["messages_extra"][i] = config.configData["messages_extra"][i].replace(/\n/g, "<br>");
         }
 
         config.SaveConfig((status) => {

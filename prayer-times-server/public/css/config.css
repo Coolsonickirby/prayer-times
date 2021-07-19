@@ -3,15 +3,6 @@
     width: 95%;
 }
 
-.form-input {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr;
-  gap: 0px 0px;
-  grid-template-areas: ". .";
-  margin-bottom: 10px;
-}
-
 .form-messages {
     margin-bottom: 10px;
 }
@@ -23,7 +14,11 @@
 .form-messages textarea {
     resize: none;
     width: 100%;
-    height: 150px;
+    height: 150px !important;
     font-size: 0.9rem;
     margin-bottom: 10px;
+}
+
+.wysiwyg-holder {
+    margin-bottom: 15px;
 }

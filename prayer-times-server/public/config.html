@@ -7,18 +7,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Config</title>
     <link rel="stylesheet" href="./css/config.css">
+    <link rel="stylesheet" href="./css/adminlte.min.css">
+    <script src="./js/jquery-3.6.0.min.js"></script>
+    <script src="./js/adminlte.min.js"></script>
+    <script src="./ckeditor/ckeditor.js"></script>
     <script>
         window.onload = () => {
             var selected = document.getElementById("orientation_mustache").textContent;
             var selected_format = document.getElementById("format_mustache").textContent;
 
-            if (selected == "normal") { document.getElementById("orientation").options.selectedIndex = 0; }
-            else if (selected == "left") { document.getElementById("orientation").options.selectedIndex = 1; }
-            else if (selected == "flipped") { document.getElementById("orientation").options.selectedIndex = 2; }
-            else if (selected == "right") { document.getElementById("orientation").options.selectedIndex = 3; }
+            if (selected == "normal") {
+                document.getElementById("orientation").options.selectedIndex = 0;
+            } else if (selected == "left") {
+                document.getElementById("orientation").options.selectedIndex = 1;
+            } else if (selected == "flipped") {
+                document.getElementById("orientation").options.selectedIndex = 2;
+            } else if (selected == "right") {
+                document.getElementById("orientation").options.selectedIndex = 3;
+            }
 
-            if (selected_format == "12") { document.getElementById("format").options.selectedIndex = 0; }
-            else if (selected_format == "24") { document.getElementById("format").options.selectedIndex = 1; }
+            if (selected_format == "12") {
+                document.getElementById("format").options.selectedIndex = 0;
+            } else if (selected_format == "24") {
+                document.getElementById("format").options.selectedIndex = 1;
+            }
 
             Array.from(document.querySelectorAll('.messages')).forEach(item => {
                 item.value = item.value.replace(/\<br\>/g, "\n");
@@ -32,97 +44,126 @@
             let new_textarea = document.createElement("textarea");
             new_textarea.classList.add(id);
             new_textarea.placeholder = "Enter Message Here";
+            new_textarea.classList.add("form-control");
             new_textarea.name = `${id}[]`;
-            document.getElementById(id).append(new_textarea);
+
+            let container = document.createElement("div");
+            container.classList.add("wysiwyg-holder");
+            container.append(new_textarea);
+
+            document.getElementById(id).append(container);
+            CKEDITOR.replace(new_textarea);
         }
 
         function RemoveMessage(id) {
-            document.querySelector(`#${id}>textarea:last-child`).remove();
+            document.querySelector(`#${id}>*:last-child`).remove();
         }
     </script>
 </head>
 
 <body>
-    <div class="container">
+    <form action="/config" method="POST">
         <span style="display: none;" id="orientation_mustache">{{ orientation }}</span>
         <span style="display: none;" id="format_mustache">{{ format }}</span>
-        <form action="/config" method="POST">
-            <div class="form-input">
+        <div class="card-body">
+            <div class="form-group">
                 <label for="masjid_name">Masjid Name:</label>
-                <input id="masjid_name" name="masjid_name" placeholder="Masjid Name Here" value="{{ masjid_name }}">
+                <input id="masjid_name" class="form-control" name="masjid_name" placeholder="Masjid Name Here" value="{{ masjid_name }}">
             </div>
 
-            <div class="form-input">
+            <div class="form-group">
                 <label for="lat">Latitude:</label>
-                <input id="lat" name="lat" placeholder="Latitude" value="{{ lat }}">
+                <input id="lat" class="form-control" name="lat" placeholder="Latitude" value="{{ lat }}">
             </div>
 
-            <div class="form-input">
+            <div class="form-group">
                 <label for="long">Longitude:</label>
-                <input id="long" name="long" placeholder="Longitude" value="{{ long }}">
+                <input id="long" class="form-control" name="long" placeholder="Longitude" value="{{ long }}">
             </div>
 
-            <div class="form-input">
+            <div class="form-group">
                 <label for="fajr_iqama">Fajr Iqama:</label>
-                <input id="fajr_iqama" name="fajr_iqama" type="number" placeholder="Fajr Iqama"
-                    value="{{ fajr_iqama }}">
+                <input id="fajr_iqama" class="form-control" name="fajr_iqama" type="number" placeholder="Fajr Iqama" value="{{ fajr_iqama }}">
             </div>
 
-            <div class="form-input">
+            <div class="form-group">
+                <label for="fajr_iqama">Fajr Iqama (Static):</label>
+                <input id="fajr_iqama" class="form-control" name="fajr_iqama_static" placeholder="Fajr Iqama (Static)" value="{{ fajr_iqama_static }}">
+            </div>
+
+
+            <div class="form-group">
                 <label for="dhuhr_iqama">Dhuhr Iqama:</label>
-                <input id="dhuhr_iqama" name="dhuhr_iqama" type="number" placeholder="Dhuhr Iqama"
-                    value="{{ dhuhr_iqama }}">
+                <input id="dhuhr_iqama" class="form-control" name="dhuhr_iqama" type="number" placeholder="Dhuhr Iqama" value="{{ dhuhr_iqama }}">
             </div>
 
-	    <div class="form-input">
-		<label for="dhuhr_iqama_static">Dhuhr Iqama (Static)</label>
-		<input id="dhuhr_iqama_static" name="dhuhr_iqama_static" placeholder="Dhuhr Iqama (Static)" value="{{ dhuhr_iqama_static  }}" />
-	    </div>
+            <div class="form-group">
+                <label for="dhuhr_iqama_static">Dhuhr Iqama (Static)</label>
+                <input id="dhuhr_iqama_static" class="form-control" name="dhuhr_iqama_static" placeholder="Dhuhr Iqama (Static)" value="{{ dhuhr_iqama_static  }}" />
+            </div>
 
-            <div class="form-input">
+            <div class="form-group">
                 <label for="asr_iqama">Asr Iqama:</label>
-                <input id="asr_iqama" name="asr_iqama" type="number" placeholder="Asr Iqama" value="{{ asr_iqama }}">
+                <input id="asr_iqama" class="form-control" name="asr_iqama" type="number" placeholder="Asr Iqama" value="{{ asr_iqama }}">
             </div>
 
-            <div class="form-input">
+            <div class="form-group">
+                <label for="asr_iqama_static">Asr Iqama (Static):</label>
+                <input id="asr_iqama_static" class="form-control" name="asr_iqama_static" placeholder="Asr Iqama (Static)" value="{{ asr_iqama_static }}">
+            </div>
+
+            <div class="form-group">
                 <label for="maghrib_iqama">Maghrib Iqama:</label>
-                <input id="maghrib_iqama" name="maghrib_iqama" type="number" placeholder="Maghrib Iqama"
-                    value="{{ maghrib_iqama }}">
+                <input id="maghrib_iqama" class="form-control" name="maghrib_iqama" type="number" placeholder="Maghrib Iqama" value="{{ maghrib_iqama }}">
             </div>
 
-            <div class="form-input">
+            <div class="form-group">
+                <label for="maghrib_iqama_static">Maghrib Iqama (Static):</label>
+                <input id="maghrib_iqama_static" class="form-control" name="maghrib_iqama_static" placeholder="Maghrib Iqama (Static)" value="{{ maghrib_iqama_static }}">
+            </div>
+
+            <div class="form-group">
                 <label for="isha_iqama">Isha Iqama:</label>
-                <input id="isha_iqama" name="isha_iqama" type="number" placeholder="Isha Iqama"
-                    value="{{ isha_iqama }}">
+                <input id="isha_iqama" class="form-control" name="isha_iqama" type="number" placeholder="Isha Iqama" value="{{ isha_iqama }}">
             </div>
 
-            <div class="form-input">
+            <div class="form-group">
+                <label for="isha_iqama_static">Isha Iqama (Static):</label>
+                <input id="isha_iqama_static" class="form-control" name="isha_iqama_static" placeholder="Isha Iqama" value="{{ isha_iqama_static }}">
+            </div>
+
+            <div class="form-group">
                 <label for="jummah_adhan">Jummah Adhan:</label>
-                <input id="jummah_adhan" name="jummah_adhan" placeholder="Jummah Adhan" value="{{ jummah_adhan }}">
+                <input id="jummah_adhan" class="form-control" name="jummah_adhan" placeholder="Jummah Adhan" value="{{ jummah_adhan }}">
             </div>
 
-            <div class="form-input">
+            <div class="form-group">
                 <label for="jummah_iqama">Jummah Iqama:</label>
-                <input id="jummah_iqama" name="jummah_iqama" placeholder="Jummah Iqama" value="{{ jummah_iqama }}">
+                <input id="jummah_iqama" class="form-control" name="jummah_iqama" placeholder="Jummah Iqama" value="{{ jummah_iqama }}">
             </div>
 
-            <div class="form-input">
+            <div class="form-group">
                 <label for="message_display_time">Message Speed (Seconds):</label>
-                <input id="message_display_time" type="number" name="message_display_time" placeholder="Message Speed"
-                    value="{{ message_original_display_time }}">
+                <input id="message_display_time" type="number" class="form-control" name="message_display_time" placeholder="Message Speed" value="{{ message_original_display_time }}">
             </div>
 
-            <div class="form-input">
+            <div class="form-group">
+                <label for="table_font_size">Prayer Times Font Size (vw):</label>
+                <input id="table_font_size" type="number" class="form-control" name="table_font_size" placeholder="Prayer Times Font Size (vw)" step="0.01" value="{{ table_font_size }}">
+            </div>
+
+
+            <div class="form-group">
                 <label for="time_format">Time Format:</label>
-                <select id="format" name="format">
+                <select id="format" class="form-control" name="format">
                     <option value="12">12-Hour</option>
                     <option value="24">24-Hour</option>
                 </select>
             </div>
 
-            <div class="form-input">
+            <div class="form-group">
                 <label for="orientation">Orientation:</label>
-                <select id="orientation" name="orientation">
+                <select id="orientation" class="form-control" name="orientation">
                     <option value="normal">Normal (Horizontal)</option>
                     <option value="left">Left (Vertical)</option>
                     <option value="flipped">Flipped (Horizontal)</option>
@@ -134,38 +175,59 @@
                 <div>
                     <label for="messages">Messages:</label>
                     <br>
-                    <div style="width: 100%;">
-                        <button style="width: 25%;" type="button" onclick="AddMessage('messages')">+</button>
-                        <button style="width: 25%;" type="button" onclick="RemoveMessage('messages')">-</button>
+                    <div style="width: 100px; display: inline;">
+                        <button style="width: 100px; display: inline; margin: 0;" class="btn btn-block btn-primary" type="button" onclick="AddMessage('messages')">+</button>
+                        <button style="width: 100px; display: inline; margin: 0;" class="btn btn-block btn-danger" type="button" onclick="RemoveMessage('messages')">-</button>
                     </div>
                 </div>
                 <div id="messages">
                     {{ #messages }}
-                    <textarea name="messages[]" class="messages" placeholder="Enter Message Here">{{ . }}</textarea>
+                    <div class="wysiwyg-holder">
+                        <textarea name="messages[]" class="messages form-control" placeholder="Enter Message Here">{{ . }}</textarea>
+                    </div>
                     {{ /messages }}
                 </div>
+            </div>
+
+            <div class="form-group">
+                <label for="messages_font_size">Messages Font Size (vw):</label>
+                <input id="messages_font_size" type="number" class="form-control" name="messages_font_size" placeholder="Messages Font Size (vw)" step="0.01" value="{{ messages_font_size }}">
             </div>
 
             <div class="form-messages">
                 <div>
                     <label for="messages_extra">Messages Extra (Only for Horizontal Orientation):</label>
                     <br>
-                    <div style="width: 100%;">
-                        <button style="width: 25%;" type="button" onclick="AddMessage('messages_extra')">+</button>
-                        <button style="width: 25%;" type="button" onclick="RemoveMessage('messages_extra')">-</button>
+                    <div style="width: 100px; display: inline;">
+                        <button style="width: 100px; display: inline; margin: 0;" class="btn btn-block btn-primary" type="button" onclick="AddMessage('messages_extra')">+</button>
+                        <button style="width: 100px; display: inline; margin: 0;" class="btn btn-block btn-danger" type="button" onclick="RemoveMessage('messages_extra')">-</button>
                     </div>
                 </div>
                 <div id="messages_extra">
                     {{ #messages_extra }}
-                    <textarea name="messages_extra[]" class="messages_extra"
-                        placeholder="Enter Message Here">{{ . }}</textarea>
+                    <div class="wysiwyg-holder">
+                        <textarea name="messages_extra[]" class="messages_extra form-control" placeholder="Enter Message Here">{{ . }}</textarea>
+                    </div>
                     {{ /messages_extra }}
                 </div>
             </div>
 
-            <button type="submit">Save Information</button>
-        </form>
-    </div>
+            <div class="form-group">
+                <label for="extra_messages_font_size">Extra Messages Font Size (vw):</label>
+                <input id="extra_messages_font_size" type="number" class="form-control" name="extra_messages_font_size" placeholder="Extra Messages Font Size (vw)" step="0.01" value="{{ extra_messages_font_size }}">
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-block btn-success">Save Information</button>
+        </div>
+    </form>
+
+    <script>
+        Array.from(document.querySelectorAll("textarea")).forEach(item => {
+            CKEDITOR.replace(item);
+        });
+    </script>
 </body>
 
 </html>
