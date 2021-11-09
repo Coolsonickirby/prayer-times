@@ -1,3 +1,11 @@
+* {
+    margin: 0;
+    padding: 0;
+    }
+p{
+    padding: 25px;
+}
+
 /* vesper-libre-700 - latin */
 
 @font-face {
