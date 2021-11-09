@@ -1,6 +1,6 @@
 [Service]
 WorkingDirectory=/home/pi/prayer-times/prayer-times-server
-ExecStart=nodemon -e html,css,js,json app.js
+ExecStart=nodemon -e html,css,js app.js
 Restart=always
 StandardOutput=syslog
 StandardError=syslog

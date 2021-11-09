@@ -189,11 +189,13 @@ function setupServer() {
 
         config.SaveConfig((status) => {
             if (status) {
-                res.send(`<a href="./config">Successfully saved config!</a>`);
+                res.send(`<h1><a href="./config">Successfully saved config!</a></h1>`);
             } else {
-                res.send(`<a href="./config">Failed saving config!</a>`);
+                res.send(`<h1><a href="./config">Failed saving config!</a></h1>`);
             }
         });
+
+        liveReloadServer.refresh("/");
     })
 
     app.use(express.json());
@@ -202,12 +204,6 @@ function setupServer() {
     app.use(express.static(__dirname + '/public/'));
     app.use('/', router);
     app.listen(9000);
-
-    liveReloadServer.server.once("connection", () => {
-        setTimeout(() => {
-            liveReloadServer.refresh("/");
-        }, 100);
-    });
 }
 
 config.ReadConfig();
