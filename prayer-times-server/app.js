@@ -155,7 +155,7 @@ function getPageData(config_page = false) {
     });
 
     var hijri_info = date.toHijri();
-    data["current_date"] = data["current_date"] + `<br>${hijri_days[hijri_info.getDay()]}, ${hijri_months[hijri_info.getMonth() - 1]} ${hijri_info.getDate() - 1}`;
+    data["current_date"] = data["current_date"] + `<br>${hijri_days[hijri_info.getDay()]}, ${hijri_months[hijri_info.getMonth() - 1]} ${hijri_info.getDate()}`;
     console.log(data);
     return data;
 }
