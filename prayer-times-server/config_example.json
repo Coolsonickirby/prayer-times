@@ -21,5 +21,6 @@
     "asr_iqama": 60,
     "maghrib_iqama": 60,
     "isha_iqama": 60,
-    "orientation": "normal"
+    "orientation": "normal",
+    "hijri_day_offset": 0
 }

@@ -15,6 +15,12 @@ var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'A
 var hijri_days = ["Ahad", "Ithnin", "Thulatha", "Arbaa", "Khams", "Jumuah", "Sabt"];
 var hijri_months = ["Muharram", "Safar", "Rabi'ul Awwal", "Rabi'ul Akhir", "Jumadal Ula", "Jumadal Akhira", "Rajab", "Sha'ban", "Ramadan", "Shawwal", "Dhul Qa'ada", "Dhul Hijja"];
 
+Date.prototype.addDays = function(days) {
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+}
+
 function ConfigClass() {
     const CONFIG_PATH = "config.json";
     this.configData = {};
@@ -46,6 +52,7 @@ function ConfigClass() {
                     "maghrib_iqama": 60,
                     "isha_iqama": 60,
                     "orientation": "normal",
+                    "hijri_day_offset": 0
                 };
                 return;
             }
@@ -154,7 +161,7 @@ function getPageData(config_page = false) {
             ));
     });
 
-    var hijri_info = date.toHijri();
+    var hijri_info = date.addDays(checkIfObjectExists(data["hijri_day_offset"]) ? parseInt(data["hijri_day_offset"]) : 0).toHijri();
     data["current_date"] = data["current_date"] + `<br>${hijri_days[hijri_info.getDay()]}, ${hijri_months[hijri_info.getMonth() - 1]} ${hijri_info.getDate()}`;
     console.log(data);
     return data;
